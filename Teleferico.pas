@@ -4,7 +4,7 @@ Program teleferico;
 Uses crt;
 
 Var 
-  user: string;
+  user,a: string;
 Begin
   WriteLn('Probando git');
 End.
