@@ -1,8 +1,8 @@
 Program teleferico;
 Uses crt;
 Var 
-  i: integer;
-  nombre, cedula, est, tramo, opc_t,opc, n_inicio, n_llegada: string;
+  i, nboleto, c_ninos, c_viejos, e_ninos, n_especial, c_especial, c_ex, boleto_g: integer;
+  nombre, cedula, est, tramo, opc_t, opc, n_inicio, n_llegada, opc_n, opc_v: string;
   validar_n, validar_l: boolean;
 const
 b_general= 20;
@@ -23,6 +23,7 @@ repeat//para validar que opc sea numero
         begin//for para verificar que la opcion ingresada al inicio sea un numero
             if not (opc[i] in ['0'..'9']) then
             begin
+            
                 validar_n := true;
                 break;
             end;
@@ -375,14 +376,98 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 				begin
 					writeln('La opcion ingresada es invalida. Por favor ingrese una opcion valida.');
 				end;		
-			until (opc_t =  '2');//fin del repeat para moverse entre tramos
+			until (opc_t = '2');//fin del repeat para moverse entre tramos
 			
 			writeln('Salio desde ', n_inicio, ', hizo su recorrido y llego hasta ', n_llegada);//probando si funciona para guardar el nombre, borrar luego
-
+			
+			writeln('Por favor, ingrese la cantidad de boletas que desea comprar');//Ingresando cantidad de boletos
+			writeln('Boleto general: 20$');
+			writeln('Boleto especial (personas tercera edad y niños entre 3 y 12 años): 12$');
+			writeln('Niños menores a 3 años exonerados');
+			repeat
+			writeln('Cantidad boletos disponibles: 60');
+			readln(nboleto);
+			
+			if (nboleto < 1) or (nboleto > 60) then
+			begin
+				writeln('La cantidad de boletos es invalida para nuestras condiciones, por favor, ingrese una cantidad dentro del limite');
+			end;
+		until (nboleto >= 1) and (nboleto <= 60);
+			repeat
+			writeln('Usted viajará con niños?');
+			writeln('1.Si');
+			writeln('2.No');
+			readln(opc_n);
+		
+		if (opc_n <> '1') and (opc_n <> '2') then
+		begin
+			writeln('La opcion seleccionada es inválida, seleccione una opcion válida');
+		end;
+		
+		until (opc_n = '1') or (opc_n = '2');
+		
+		if (opc_n = '1') then
+		begin //begin if opcion 1 niños
+			writeln('Con cuantos niños viajara?');
+			readln(c_ninos);
+			i := 0;
+			n_especial := 0;
+			c_ex := 0;
+				
+				repeat
+				writeln('Ingrese la edad del niño ', i+1);
+				readln(e_ninos);
+				if (e_ninos <= 12) and (e_ninos >= 3) then
+				begin
+					n_especial := n_especial + 1;
+				end
+				
+				else if (e_ninos < 3) and (e_ninos >= 0) then
+				begin
+					c_ex := c_ex + 1;
+				end;
+			
+			i := i + 1
+			until c_ninos = i;	
+		
+			repeat
+			writeln('Usted viajará con personas de tercera edad?');
+			writeln('1.Si');
+			writeln('2.No');
+			readln(opc_v);
+		
+			if (opc_v <> '1') and (opc_v <> '2') then
+			begin
+				writeln('La opcion seleccionada es inválida, seleccione una opcion válida');
+			end;
+		
+			until (opc_v = '1') or (opc_v = '2');
+		
+			if (opc_v = '1') then
+			begin //begin if opcion 1 tercera edad
+				writeln('Con cuantas personas de tercera edad viajara?');
+				readln(c_viejos);
+			
+			c_especial := n_especial + c_viejos;
+			end; // end if opcion 1 tercera edad
+			
+		end; //opcion 1 niños
+			
+		boleto_g := 2 + 2; //Calculando la cantidad de boletos generales
+		
+		writeln('boletos especiales ', c_especial);
+		
+			writeln('Ninos exonerados ', c_ex);
+			writeln('viejos ', c_viejos);
+			writeln('boletos generales ', boleto_g);
+			readln();
+		
 		end;//end principal case opcion 1
 		
 		'2':
 		begin//begin principal case opcion 2
+		
+		//SISTEMA
 		
 		end;//end principal case opcion 2
 	
