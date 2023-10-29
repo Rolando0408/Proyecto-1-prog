@@ -1,8 +1,8 @@
 Program teleferico;
 Uses crt;
 Var 
-  opc, i: integer;
-  nombre, cedula, est, tramo, opc_t: string;
+  i: integer;
+  nombre, cedula, est, tramo, opc_t,opc: string;
   validar_n, validar_l: boolean;
 const
 b_general= 20;
@@ -10,22 +10,38 @@ b_especial= 12;
   
 Begin//Begin principal
 repeat//Para validar la opcion
+repeat//para validar que opc sea numero
 	writeln('Bienvenido al teleferico de Merida, a continuacion seleccione la opcion que desea realizar.');
 	writeln('');
 	writeln('1. Comprar boleto');
 	writeln('2. Ver sistema del teleferico');
 	writeln('3. Salir');
 	readln(opc);
+	validar_n:= false;
 	
-		if (opc < 1) or (opc > 3) then
+        for i := 1 to Length(opc) do
+        begin//for para verificar que la opcion ingresada al inicio sea un numero
+            if not (opc[i] in ['0'..'9']) then
+            begin
+                validar_n := true;
+                break;
+            end;
+        end;//end del for para verificar que la opcion ingresada al inicio sea un numero
+
+        if validar_n then
+            writeln('La opcion ingresada no es un numero valido. Por favor ingrese una opcion valida.')
+until not validar_n;//fin del repeat que valida que sea un numero
+	
+		if (opc < '1') or (opc > '3') then
 		begin//Begin del if para validar opcion
 			writeln('Opcion invalida. Por favor ingrese una opcion valida.');
 		end;//End del if para validar la opcion
-until (opc >= 1) and (opc <= 3);//Fin del repeat para validar opcion
+		
+until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 
 	case opc of //case de opcion que quiera seleccionar
 		
-		1: 
+		'1': 
 		begin//begin principal case opcion 1
 			writeln('');
 			writeln('Usted ha ingresado a la compra de boletos, a continuacion ingrese los datos solicitados.');
@@ -294,12 +310,14 @@ until (opc >= 1) and (opc <= 3);//Fin del repeat para validar opcion
 					end;
 				end;//end principal opcion 5
 			end;//end principal del case para moverse entre tramos
+			
 			repeat//para validar que la opcion ingresada sea solo un numero.
 			writeln('¿Deseas continuar entre tramos?');
 			writeln('1. Si');
 			writeln('2. No');
 			readln(opc_t);
-
+			validar_n:= false;
+			
 			for i := 1 to Length(opc_t) do
 			begin
 				if not (opc_t[i] in ['0'..'9']) then
@@ -325,7 +343,7 @@ until (opc >= 1) and (opc <= 3);//Fin del repeat para validar opcion
 
 		end;//end principal case opcion 1
 		
-		2:
+		'2':
 		begin//begin principal case opcion 2
 		
 		end;//end principal case opcion 2
