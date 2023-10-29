@@ -2,8 +2,8 @@ Program teleferico;
 Uses crt;
 Var 
   opc, i: integer;
-  nombre, cedula, est: string;
-  validar_c, validacion_n, validar_est: boolean;
+  nombre, cedula, est, tramo, opc_t: string;
+  validar_n, validar_l: boolean;
 const
 b_general= 20;
 b_especial= 12;
@@ -32,25 +32,25 @@ until (opc >= 1) and (opc <= 3);//Fin del repeat para validar opcion
 			repeat//repeat para validar el nombre
 			writeln('Ingrese su nombre y apellido:');
 			readln(nombre);
-			validacion_n:= false;
+			validar_l:= false;
 			
 				for i := 1 to Length(nombre) do  // For para verificar si el nombre es valido (que no contenga numeros).
 				begin//begin del for
 					if (not (nombre[i] in ['A'..'Z', 'a'..'z', ' '])) then
 					begin//begin del if para validar nombre
-						validacion_n := true;
+						validar_l := true;
 						break;
 					end;//end del if para validar nombre
 				end;//end del for para validar nombre
 
-				if  validacion_n then// if en caso de que el nombre sea invalido
+				if  validar_l then// if en caso de que el nombre sea invalido
 				begin//begin del if en caso de que el nombre no sea valido
 					writeln('El nombre y apellido no pueden contener numeros, ingrese un nombre valido.');
 				 end;//end del if en caso de que el nombre no sea valido
-			until not validacion_n;//fin del repeat para validar nombre
+			until not validar_l;//fin del repeat para validar nombre
 			
 			repeat//repeat para validar cedula
-			validar_c := false; 
+			validar_n := false; 
 			writeln('Ingrese su numero de cedula: ');
 			readln(cedula);
 
@@ -58,50 +58,271 @@ until (opc >= 1) and (opc <= 3);//Fin del repeat para validar opcion
 			begin//begin del for para verificar cedula
 				if not (cedula[i] in ['0'..'9']) then
 				begin//begin del if para validar
-					validar_c := true;
+					validar_n := true;
 					break;
 				end;//end del if para validar cedula
 			end;//end del for para verificar cedula
 
-			if validar_c then//if en caso de que la cedula sea invalida
+			if validar_n then//if en caso de que la cedula sea invalida
 			begin//begin del if en caso de que no sea valida la cedula
-				writeln('La entrada no es un número válido. Inténtelo de nuevo.');
+				writeln('La cedula ingresada solo debe contener numeros. Por favor ingrese un numero de cedula valido.');
 			end;//end del if en caso de que no sea valida la cedula
-			until not validar_c;
-				
-			repeat//Repeat para validar la estacion
-			repeat//repeat del bucle para validar que la opcion de estacion es un numero
-			writeln('Ingrese el numero correspondiente de la estacion donde se encuentra.');
+			until not validar_n;
+			
+			repeat//Para validar la estacion
+			repeat//para ver si la estacion ingresada es de las disponibles
+			writeln('Ingrese el numero de la estacion donde se encuentra:');
 			writeln('1. Barinitas');
-			writeln('2. La Montaña');
-			writeln('3. La Aguada');
-			writeln('4. Loma Redonda');
-			writeln('5. Pico Espejo');
+			writeln('2. La montaña');
+			writeln('3. La aguada');
+			writeln('4. Loma redonda');
+			writeln('5. Pico espejo');
 			readln(est);
-			validar_est:= false;
-			
-			for i := 1 to Length(est) do//for para validar que estacion sea un numero
-			begin//begin del for para validar que estacion sea un numero
-				if not (est[i] in ['0'..'9']) then
-				begin//begin del if para validar que estacion sea un numero
-					validar_est := true;
-					break;
-				end;//end del if para validar que estacion sea un numero
-			end;//end del for para validar que estacion sea un numero
+			validar_n:= false;
+				
+				if (est < '1') or (est > '5') then
+				begin
+					writeln('La estacion ingresada no es valida. Por favor infgrese una estacion valida');
+				end;
+			until (est >= '1') and (est <= '5');
+				
+				for i := 1 to Length(est) do//For para verificar que la estacion sean solo numeros
+				begin//begin rpincipal del for
+					if not (est[i] in ['0'..'9']) then
+					begin
+						validar_n := true;
+						break;
+					end;
+				end;//end principal del for
 
-			if validar_est then//if para validar que la estacion sea un numero
-			begin//begin del if para validar estacion
-				writeln('La estacion ingresada no es un numero valido. Por favor ingrese un numero valido.');
-			end;//end del if para validar estacion 
-			until not validar_est;//fin del repeat para validar que estacion sea un numero
+				if validar_n then
+				begin
+					writeln('La estacion no es un numero valido. Por favvor ingrese un numero valido .');
+				end;
+			until not validar_n;//fin del repeat para validar que la estacion sea un numero
 			
-				if (est < '1') or (est > '5') then//if para validar la estacion
-				begin//begin de if para validacion de estacion
-					writeln('La estacion ingresada es incorrecta. Por favor ingrese una estacion valida');
-				end;//end de validacion de estacion
-			until (est >= '1') and (est <= '5');//fin del repeat para validar la estacion
-			//rolando, quedaste aqui.
-		
+			repeat//repetir para poder moverse entre tramos
+				case est of//case para mostrar estaciones y permitir al usuario moverse entre tramos
+					'1': begin//begin principal de la opcion 1
+						repeat//Repeat para la validar que el tramo sea un numero
+							writeln('Estacion actual: Barinitas');
+							writeln('Tramos disponibles:');
+							writeln('1. Barinitas - La montaña');
+							writeln('6. Salir del teleferico');
+							readln(tramo);
+							validar_n:= false;
+							
+							for i := 1 to Length(tramo) do
+							begin//begin principal del for para validar el tramo
+								if not (tramo[i] in ['0'..'9']) then
+								begin
+									validar_n := true;
+									break;
+								end;
+							end;//end principal del for para validar el tramo
+
+							if validar_n then
+								writeln('El tramo no es un número válido. Por favor ingrese un numero valido.')
+	
+						until not validar_n;//Fin del repeat para que estacion sea solo un numero
+
+						if (tramo <> '1') and (tramo <> '6') then
+						begin
+							writeln('Opcion no valida. Elige una opcion disponible.');
+						end
+						else if tramo ='1' then
+						begin
+							est := '2';
+						end
+						else if tramo = '6' then
+							break;
+					end;//end principal de la opcion 1
+					'2': begin//begin principal de la opcion 2
+						repeat
+							writeln('Estacion actual: La montaña');
+							writeln('Tramos disponibles:');
+							writeln('1. La montaña - Barinitas');
+							writeln('2. La montaña - La aguada');
+							writeln('6. Salir del teleferico');
+							readln(tramo);
+							validar_n:= false;
+						
+							for i := 1 to Length(tramo) do
+								begin//begin principal del for para validar el tramo
+									if not (tramo[i] in ['0'..'9']) then
+									begin
+										validar_n := true;
+										break;
+									end;
+								end;//end principal del for para validar el tramo
+
+								if validar_n then
+									writeln('El tramo no es un número válido. Por favor ingrese un numero valido.')
+	
+							until not validar_n;//Fin del repeat para que estacion sea solo un numero
+
+							if (tramo <> '1') and (tramo <> '2') and (tramo <> '6') then//if para validar la opcion ingresada
+							begin
+								writeln('Opcion no valida. Elige una opcion disponible.');
+							end//fin del if para validar la opcion ingresada
+							else if tramo = '1' then//else if para cambiar entre tramos segun las opciones ingresadas
+							begin
+								est := '1';
+							end
+							else if tramo = '2' then
+							begin
+								est := '3';
+							end
+							else if tramo = '6' then
+								break;
+						end;//end principal de la opcion 2
+					
+					'3': begin//begin principal de la opcion 3
+						repeat
+						writeln('Estacion actual: La aguada');
+						writeln('Tramos disponibles:');
+						writeln('2. La aguada - La montaña');
+						writeln('3. La aguada - Loma redonda');
+						writeln('6. Salir del teleferico');
+						readln(tramo);
+						validar_n:= false;
+			
+							for i := 1 to Length(tramo) do
+							begin//begin principal del for para validar el tramo
+								if not (tramo[i] in ['0'..'9']) then
+								begin
+									validar_n := true;
+									break;
+								end;
+							end;//end principal del for para validar el tramo
+
+							if validar_n then
+								writeln('El tramo no es un número válido. Por favor ingrese un numero valido.')
+	
+						until not validar_n;//Fin del repeat para que estacion sea solo un numero
+
+						if (tramo <> '2') and (tramo <> '3') and (tramo <> '6') then
+						begin
+							writeln('Opcion no valida. Elige una opcion disponible.');
+						end
+						else if tramo = '2' then
+						begin	
+							est := '2';
+						end
+						else if tramo = '3' then
+						begin	
+							est := '4';
+						end
+						else if tramo = '6' then
+							break;
+					end;//end principal de la opcion 3
+					
+					'4': begin//begin principal de la opcion 4 
+						repeat
+						writeln('Estacion actual: Loma redonda');
+						writeln('Tramos disponibles:');
+						writeln('3. Loma redonda - La aguada');
+						writeln('4. Loma redonda - Pico espejo');
+						writeln('6. Salir del teleferico');
+						readln(tramo);
+						validar_n:= false;
+							
+							for i := 1 to Length(tramo) do
+							begin//begin principal del for para validar el tramo
+								if not (tramo[i] in ['0'..'9']) then
+								begin
+									validar_n := true;
+									break;
+								end;
+							end;//end principal del for para validar el tramo
+
+							if validar_n then
+								writeln('El tramo no es un número válido. Por favor ingrese un numero valido.')
+	
+						until not validar_n;//Fin del repeat para que estacion sea solo un numero
+
+						if (tramo <> '3') and (tramo <> '4') and (tramo <> '6') then
+						begin
+							writeln('Opcion no valida. Elige una opcion disponible.');
+						end
+						else if tramo = '3' then
+						begin	
+							est := '3';
+						end
+						else if tramo = '4' then
+						begin	
+							est := '5';
+						end
+						else if tramo = '6' then
+							break;
+					end;//end principal de la opcion 4
+            
+            '5': begin//begin ptincipal opcion 5
+				repeat
+					writeln('Estacion actual: Pico espejo');
+					writeln('Tramos disponibles:');
+					writeln('4. Pico espejo - Loma redonda');
+					writeln('5. Pico espejo - Salir del teleferico');
+					readln(tramo);
+					validar_n:= false;
+							
+						for i := 1 to Length(tramo) do
+						begin//begin principal del for para validar el tramo
+							if not (tramo[i] in ['0'..'9']) then
+									begin
+								validar_n := true;
+								break;
+								end;
+						end;//end principal del for para validar el tramo
+
+						if validar_n then
+							writeln('El tramo no es un número válido. Por favor ingrese un numero valido.')
+					until not validar_n;//Fin del repeat para que estacion sea solo un numero
+
+					if (tramo <> '4') and (tramo <> '5') then
+					begin
+						writeln('Opcion no valida. Elige una opcion disponible.');
+					end
+					else if tramo = '4' then
+					begin
+						est := '4';
+					end
+					else if (tramo = '5') or (tramo = '6') then
+					begin
+						writeln('Ya se recorrieron todos los tramos.');
+						break;
+					end;
+				end;//end principal opcion 5
+			end;//end principal del case para moverse entre tramos
+			repeat//para validar que la opcion ingresada sea solo un numero.
+			writeln('¿Deseas continuar entre tramos?');
+			writeln('1. Si');
+			writeln('2. No');
+			readln(opc_t);
+
+			for i := 1 to Length(opc_t) do
+			begin
+				if not (opc_t[i] in ['0'..'9']) then
+				begin
+					validar_n := true;
+					break;
+				end;
+			end;
+
+			if validar_n then
+			begin
+				writeln('La opcion no es un numero valido. Por favor ingrese un numero valido.');
+			end;
+			
+			until not validar_n;//fin del repeat para validar que la opc_t sea un numero
+			
+				if (opc_t <> '1') and (opc_t <> '2') then
+				begin
+					writeln('La opcion ingresada es invalida. Por favor ingrese una opcion valida.');
+				end;		
+			until (opc_t =  '2');//fin del repeat para moverse entre tramos
+			//Rolando quedaste aqui!!!!! ya el usuario se puede mover entre tramos.
+
 		end;//end principal case opcion 1
 		
 		2:
