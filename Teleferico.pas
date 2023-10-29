@@ -2,7 +2,7 @@ Program teleferico;
 Uses crt;
 Var 
   i: integer;
-  nombre, cedula, est, tramo, opc_t,opc: string;
+  nombre, cedula, est, tramo, opc_t,opc, n_inicio, n_llegada: string;
   validar_n, validar_l: boolean;
 const
 b_general= 20;
@@ -101,6 +101,36 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 					writeln('La estacion ingresada no es valida. Por favor infgrese una estacion valida');
 				end;
 			until (est >= '1') and (est <= '5');
+			
+			case est of//case para alojar el nombre de la estacionj de salida
+			
+				'1':
+				begin//principal de la opcion 1 de n_inicio
+					n_inicio:= 'Barinitas';
+				end;//principal de la opcionj 1  de n_inicio
+			
+				'2':
+				begin
+					n_inicio:= 'La montaña';
+				end;
+				
+				'3':
+				begin
+					n_inicio:= 'La aguada';
+				end;
+				
+				'4':
+				begin
+					n_inicio:= 'Loma redonda';
+				end;
+				
+				'5':
+				begin
+					n_inicio:= 'Pico espejo';
+				end;
+			
+			end;//end principal para el case de alojar nombre
+			 
 				
 				for i := 1 to Length(est) do//For para verificar que la estacion sean solo numeros
 				begin//begin rpincipal del for
@@ -127,6 +157,7 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 							writeln('6. Salir del teleferico');
 							readln(tramo);
 							validar_n:= false;
+							n_llegada:= 'Barinitas';
 							
 							for i := 1 to Length(tramo) do
 							begin//begin principal del for para validar el tramo
@@ -162,6 +193,7 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 							writeln('6. Salir del teleferico');
 							readln(tramo);
 							validar_n:= false;
+							n_llegada:= 'La montaña';
 						
 							for i := 1 to Length(tramo) do
 								begin//begin principal del for para validar el tramo
@@ -202,6 +234,7 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 						writeln('6. Salir del teleferico');
 						readln(tramo);
 						validar_n:= false;
+						n_llegada:= 'La Aguada';
 			
 							for i := 1 to Length(tramo) do
 							begin//begin principal del for para validar el tramo
@@ -242,6 +275,7 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 						writeln('6. Salir del teleferico');
 						readln(tramo);
 						validar_n:= false;
+						n_llegada:= 'Loma redonda';
 							
 							for i := 1 to Length(tramo) do
 							begin//begin principal del for para validar el tramo
@@ -281,6 +315,7 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 					writeln('5. Pico espejo - Salir del teleferico');
 					readln(tramo);
 					validar_n:= false;
+					n_llegada:= 'Pico espejo';
 							
 						for i := 1 to Length(tramo) do
 						begin//begin principal del for para validar el tramo
@@ -308,7 +343,9 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 						writeln('Ya se recorrieron todos los tramos.');
 						break;
 					end;
+					
 				end;//end principal opcion 5
+				
 			end;//end principal del case para moverse entre tramos
 			
 			repeat//para validar que la opcion ingresada sea solo un numero.
@@ -339,7 +376,8 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 					writeln('La opcion ingresada es invalida. Por favor ingrese una opcion valida.');
 				end;		
 			until (opc_t =  '2');//fin del repeat para moverse entre tramos
-			//Rolando quedaste aqui!!!!! ya el usuario se puede mover entre tramos.
+			
+			writeln('Salio desde ', n_inicio, ', hizo su recorrido y llego hasta ', n_llegada);//probando si funciona para guardar el nombre, borrar luego
 
 		end;//end principal case opcion 1
 		
