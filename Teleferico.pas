@@ -119,6 +119,17 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 			ClrScr;
 			repeat//Para validar la estacion
 			repeat//para ver si la estacion ingresada es de las disponibles
+			writeln('A continuacion podra observar todo nuestro sistema de estaciones y tramos!');
+			writeln('');
+			writeln('|----------------------------|   |----------------------------|');
+			writeln('|---------Estaciones---------|   |-----------Tramos-----------|');
+			writeln('|----------------------------|   |----------------------------|');
+			writeln('| 1- Barinitas               |   |   Barinitas > La Montana   |');
+			writeln('| 2- La Montana              |   |   La Montana > La Aguada   |');
+			writeln('| 3- La Aguada               |   |  La Aguada > Loma Redonda  |');
+			writeln('| 4- Loma Redonda            |   | Loma Redonda > Pico Espejo |');
+			writeln('| 5- Pico Espejo             |   |----------------------------|');
+			writeln('|----------------------------|');
 			writeln('');
 			writeln('Ingrese el numero de la estacion donde se encuentra:');
 			writeln('1. Barinitas');
