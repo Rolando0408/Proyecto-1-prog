@@ -1,9 +1,9 @@
 Program teleferico;
 Uses crt;
 Var 
-  i, nboleto, c_ninos, c_viejos, e_ninos, n_especial, c_especial, c_ex, boleto_g: integer;
-  nombre, cedula, est, tramo, opc_t, opc, n_inicio, n_llegada, opc_n, opc_v: string;
-  validar_n, validar_l: boolean;
+  i, nboleto, c_ninos, c_viejos, e_ninos, n_especial, c_especial, c_ex, boleto_g, n_normales,val_int, b_disp: integer;
+  nombre, cedula, est, tramo, opc_t, opc, n_inicio, n_llegada, opc_n, opc_v, val_str, cn_str, edad_str,vie_str: string;
+  validar_n, validar_l, n_val: boolean;
 const
 b_general= 20;
 b_especial= 12;
@@ -378,45 +378,87 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 				end;		
 			until (opc_t = '2');//fin del repeat para moverse entre tramos
 			
-			writeln('Salio desde ', n_inicio, ', hizo su recorrido y llego hasta ', n_llegada);//probando si funciona para guardar el nombre, borrar luego
-			
-			writeln('Por favor, ingrese la cantidad de boletas que desea comprar');//Ingresando cantidad de boletos
-			writeln('Boleto general: 20$');
-			writeln('Boleto especial (personas tercera edad y niños entre 3 y 12 años): 12$');
+			writeln('');
+			b_disp:= 60;
+			repeat//repeat para validar que el numero de boletos no exceda el limite
+			repeat//para validar que el caracter ingresado sea entero
+			writeln('');
+			writeln('En este momento poseemos esta cantidad de boletos disponibles: ', b_disp);
+			writeln('');
+			writeln('Estas son nuestras tarifas de precio');
+			writeln('');
+			writeln('Boleto general: $.', b_general);
+			writeln('Boleto especial (personas tercera edad y niños entre 3 y 12 años): $.', b_especial);
 			writeln('Niños menores a 3 años exonerados');
-			repeat
-			writeln('Cantidad boletos disponibles: 60');
-			readln(nboleto);
+			writeln('');
+			writeln('Por favor, ingrese la cantidad de boletas que desea comprar');//Ingresando cantidad de boletos
+			readln(val_str);
 			
-			if (nboleto < 1) or (nboleto > 60) then
+			n_val := true;
+			Val(val_str, nboleto, val_int);//funcion para cambiar un numero a una string
+
+			if val_int <> 0 then//verificar si se dio el cambio
 			begin
-				writeln('La cantidad de boletos es invalida para nuestras condiciones, por favor, ingrese una cantidad dentro del limite');
-			end;
-		until (nboleto >= 1) and (nboleto <= 60);
-			repeat
+				writeln('La entrada no es un número entero. Por favor, intenta de nuevo.');
+				n_val := false; //si no se da el cambio, se coloca false para repetir el bucle
+			end;//fin de la verificacion
+		until n_val;//fin del repeat para validar que sea un numero entero
+			
+				if (nboleto < 1) or (nboleto > 60) then
+				begin
+					writeln('La cantidad de boletos es invalida para nuestras condiciones, por favor, ingrese una cantidad dentro del limite');
+				end;
+			
+			until (nboleto >= 1) and (nboleto <= 60);//hasta que sea un numero menor al limite de boletos
+			
+			repeat//Validar opcion de niños
 			writeln('Usted viajará con niños?');
 			writeln('1.Si');
 			writeln('2.No');
 			readln(opc_n);
 		
-		if (opc_n <> '1') and (opc_n <> '2') then
-		begin
-			writeln('La opcion seleccionada es inválida, seleccione una opcion válida');
-		end;
+				if (opc_n <> '1') and (opc_n <> '2') then
+				begin
+					writeln('La opcion seleccionada es inválida, seleccione una opcion válida');
+				end;
 		
-		until (opc_n = '1') or (opc_n = '2');
+			until (opc_n = '1') or (opc_n = '2');//hasta que la opcion cumpla las condiciones
 		
 		if (opc_n = '1') then
 		begin //begin if opcion 1 niños
+			repeat//para validar que el numero es entero
 			writeln('Con cuantos niños viajara?');
-			readln(c_ninos);
+			readln(cn_str);
+			n_val := true;
+			Val(cn_str, c_ninos, val_int);
+
+			if val_int <> 0 then
+			begin
+				writeln('La entrada no es un número entero. Por favor, intenta de nuevo.');
+				n_val := false; // Establecer n_val en falso para repetir el bucle
+			end;
+		until n_val;//fin del repeat para validar el numero entero
+			
 			i := 0;
 			n_especial := 0;
 			c_ex := 0;
 				
-				repeat
+				repeat//repeat para pedir la edad de los niños ingresados
+				repeat//para validar que el numero ingresado sea entero
 				writeln('Ingrese la edad del niño ', i+1);
-				readln(e_ninos);
+				readln(edad_str);
+				
+				n_val := true;
+				Val(edad_str, e_ninos, val_int);
+
+					if val_int <> 0 then
+					begin
+						writeln('La entrada no es un número entero. Por favor, intenta de nuevo.');
+						n_val := false; // Establecer n_val en falso para repetir el bucle
+					end;
+					
+				until n_val;
+						
 				if (e_ninos <= 12) and (e_ninos >= 3) then
 				begin
 					n_especial := n_especial + 1;
@@ -427,40 +469,71 @@ until (opc >= '1') and (opc <= '3');//Fin del repeat para validar opcion
 					c_ex := c_ex + 1;
 				end;
 			
-			i := i + 1
-			until c_ninos = i;	
-		
-			repeat
+				i := i + 1;
+				until c_ninos = i;//hasta que el contador sea igual a la cantidad de niños 	
+			
+				n_normales:= c_ninos - (c_ex + n_especial);//Calculando niños que pagan boleto general
+				
+			end; //opcion 1 niños
+			
+			repeat//para validar que la opcion sea valida
+			repeat//para validar que la opcion ingresada es u8n numero
 			writeln('Usted viajará con personas de tercera edad?');
 			writeln('1.Si');
 			writeln('2.No');
 			readln(opc_v);
+			validar_n := false;
+
+			for i := 1 to Length(opc_v) do//for para verificar que el valor ingresado sea un numero
+			begin
+				if not (opc_v[i] in ['0'..'9']) then
+				begin
+					validar_n := true;
+					break;
+				end;
+			end;
+
+			if validar_n then
+				writeln('La opcion ingresada no es un numero valido. Ingrese una opcion valida.')
+
+			until not validar_n;//fin del bucle para verificar
 		
 			if (opc_v <> '1') and (opc_v <> '2') then
 			begin
 				writeln('La opcion seleccionada es inválida, seleccione una opcion válida');
 			end;
 		
-			until (opc_v = '1') or (opc_v = '2');
+			until (opc_v = '1') or (opc_v = '2');//hasta que se cumplan las condiciones
 		
-			if (opc_v = '1') then
-			begin //begin if opcion 1 tercera edad
-				writeln('Con cuantas personas de tercera edad viajara?');
-				readln(c_viejos);
-			
-			c_especial := n_especial + c_viejos;
-			end; // end if opcion 1 tercera edad
-			
-		end; //opcion 1 niños
-			
-		boleto_g := 2 + 2; //Calculando la cantidad de boletos generales
+				if (opc_v = '1') then
+				begin //begin if opcion 1 tercera edad
+				repeat
+					writeln('Con cuantas personas de tercera edad viajara?');
+					readln(vie_str);
+					n_val := true;
+					Val(vie_str, c_viejos, val_int);
+
+					if val_int <> 0 then
+					begin
+						writeln('La entrada no es un número entero. Por favor, intenta de nuevo.');
+						n_val := false; // Establecer n_val en falso para repetir el bucle
+					end;
+				until n_val;
+						
+				end; // end if opcion 1 tercera edad
 		
+		c_especial := n_especial + c_viejos;//calculando cabtidad de boletos de 12$
+		
+		writeln('');
+		writeln('niños normales ', n_normales);
 		writeln('boletos especiales ', c_especial);
+		writeln('Ninos exonerados ', c_ex);
+		writeln('viejos ', c_viejos);				//borrar despues
+		writeln('Cantidad de niños ', c_ninos);
+		writeln('Niños especiales ', n_especial);
 		
-			writeln('Ninos exonerados ', c_ex);
-			writeln('viejos ', c_viejos);
-			writeln('boletos generales ', boleto_g);
-			readln();
+		boleto_g := nboleto - c_especial - c_ex ; //Calculando la cantidad de boletos generales 20$
+		writeln('boletos generales ', boleto_g);
 		
 		end;//end principal case opcion 1
 		
