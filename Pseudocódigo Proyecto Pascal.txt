@@ -1,0 +1,456 @@
+Algoritmo teleferico
+	Definir 
+		b_exvendidos, ventas, b_gvendidos, b_evendidos, b_vendidos, i, nboleto, c_ninos, c_viejos, e_ninos, n_especial, c_especial, c_ex, boleto_g, n_normales,val_int, b_disp Como Entero;
+		nombre, cedula, est, tramo, opc_t, opc, n_inicio, n_llegada, opc_n, opc_v, val_str, cn_str, edad_str,vie_str Como Cadena;
+		validar_n, validar_l, n_val Como Logico;
+		p_total, p_general, p_especial,total_v, total_g, total_e Como Real;
+		b_general= 20;
+		b_especial= 12;
+	
+	total_v:= 0;
+	total_e:= 0;
+	total_g:= 0;
+	b_disp:= 60;
+	b_vendidos:= 0;
+	b_gvendidos:= 0;
+	b_exvendidos:= 0;
+	b_evendidos:= 0;
+	ventas:= 0;
+
+	Repetir
+		Repetir
+			Escribir "Bienvenido al teleferico de Merida. Seleccione la opcion que desea realizar.";
+			Escribir "1. Comprar boleto";
+			Escribir "2. Ver sistema del teleferico";
+			Escribir "3. Salir";
+			Leer opc;
+			validar_n:= Falso;
+
+			Para i <- 1 Hasta Longitud(opc) Con Paso 1 Hacer
+				Si No EstaEntre(opc[i], '0', '9') Entonces
+					validar_n := Verdadero;
+					Salir Para;
+				FinSi
+			Fin Para
+
+			Si validar_n Entonces
+				Escribir "La opcion ingresada no es un numero valido. Por favor ingrese una opcion valida.";
+			FinSi
+		Hasta No validar_n
+
+		Si (opc < '1') o (opc > '3') Entonces
+			Escribir "Opcion invalida. Por favor ingrese una opcion valida.";
+		FinSi
+	Hasta (opc >= '1') y (opc <= '3')
+
+	Segun opc Hacer
+		opc = '1':
+			Si (b_disp > 0) Entonces
+				Escribir "Usted ha ingresado a la compra de boletos. Ingrese los datos solicitados.";
+				Repetir
+					Escribir "Ingrese su nombre y apellido:";
+					Leer nombre;
+					validar_l:= Falso;
+
+					Para i <- 1 Hasta Longitud(nombre) Con Paso 1 Hacer
+						Si No EstaEntre(nombre[i], 'A', 'Z', 'a', 'z', ' ') Entonces
+							validar_l := Verdadero;
+							Salir Para;
+						FinSi
+					Fin Para
+
+					Si validar_l Entonces
+						Escribir "El nombre y apellido no pueden contener numeros, ingrese un nombre valido.";
+					FinSi
+				Hasta No validar_l
+
+				Repetir
+					validar_n := Falso;
+					Escribir "Ingrese su numero de cedula: ";
+					Leer cedula;
+
+					Para i <- 1 Hasta Longitud(cedula) Con Paso 1 Hacer
+						Si No EstaEntre(cedula[i], '0', '9') Entonces
+							validar_n := Verdadero;
+							Salir Para;
+						FinSi
+					Fin Para
+
+					Si validar_n Entonces
+						Escribir "La cedula ingresada solo debe contener numeros. Por favor ingrese un numero de cedula valido.";
+					FinSi
+				Hasta No validar_n
+				Escribir "A continuacion podra observar todo nuestro sistema de estaciones y tramos!";
+				Escribir "|----------------------------|   |----------------------------|";
+				Escribir "|---------Estaciones---------|   |-----------Tramos-----------|";
+				Escribir "|----------------------------|   |----------------------------|";
+				Escribir "| 1- Barinitas               |   |   Barinitas > La Montana   |";
+				Escribir "| 2- La Montana              |   |   La Montana > La Aguada   |";
+				Escribir "| 3- La Aguada               |   |  La Aguada > Loma Redonda  |";
+				Escribir "| 4- Loma Redonda            |   | Loma Redonda > Pico Espejo |";
+				Escribir "| 5- Pico Espejo             |   |----------------------------|";
+				Escribir "|----------------------------|";
+				Escribir "Ingrese el numero de la estacion donde se encuentra:";
+				Leer est;
+				validar_n:= Falso;
+
+				Si (est < '1') o (est > '5') Entonces
+					Escribir "La estacion ingresada no es valida. Por favor ingrese una estacion valida.";
+				FinSi
+			Hasta (est >= '1') y (est <= '5')
+
+			Segun est Hacer
+				'1': n_inicio:= 'Barinitas';
+				'2': n_inicio:= 'La montaña';
+				'3': n_inicio:= 'La aguada';
+				'4': n_inicio:= 'Loma redonda';
+				'5': n_inicio:= 'Pico espejo';
+			Fin Segun
+
+			Para i <- 1 Hasta Longitud(est) Con Paso 1 Hacer
+				Si No EstaEntre(est[i], '0', '9') Entonces
+					validar_n := Verdadero;
+					Salir Para;
+				FinSi
+			Fin Para
+
+			Si validar_n Entonces
+				Escribir "La estacion no es un numero valido. Por favvor ingrese un numero valido .";
+			Hasta No validar_n
+
+			Repetir
+				Segun est Hacer
+					'1':
+						Repetir
+							Escribir "Estacion actual: Barinitas";
+							Escribir "Ingrese el tramo que desee recorrer:";
+							Escribir "1. Barinitas - La montaña";
+							Escribir "6. Salir del teleferico";
+							Leer tramo;
+							validar_n:= Falso;
+							n_llegada:= 'Barinitas';
+
+							Para i <- 1 Hasta Longitud(tramo) Con Paso 1 Hacer
+								Si No EstaEntre(tramo[i], '0', '9') Entonces
+							Si (tramo <> '1') y (tramo <> '6') Entonces
+								Escribir "Opcion no valida. Elige una opcion disponible.";
+							Sino Si tramo ='1' Entonces
+								est := '2';
+							Sino Si tramo = '6' Entonces
+								Salir Repetir;
+							FinSi
+						Fin Segun
+
+						Segun est Hacer
+							'2':
+								Repetir
+									Escribir "Estacion actual: La montaña";
+									Escribir "Ingrese el tramo que desee recorrer:";
+									Escribir "1. La montaña - Barinitas";
+									Escribir "2. La montaña - La aguada";
+									Escribir "6. Salir del teleferico";
+									Leer tramo;
+									validar_n:= Falso;
+									n_llegada:= 'La montaña';
+
+									Para i <- 1 Hasta Longitud(tramo) Con Paso 1 Hacer
+										Si No EstaEntre(tramo[i], '0', '9') Entonces
+											validar_n := Verdadero;
+											Salir Para;
+										FinSi
+									Fin Para
+
+									Si validar_n Entonces
+										Escribir "El tramo no es un número válido. Por favor ingrese un numero valido."
+								Hasta No validar_n
+
+								Si (tramo <> '1') y (tramo <> '2') y (tramo <> '6') Entonces
+									Escribir "Opcion no valida. Elige una opcion disponible.";
+								Sino Si tramo = '1' Entonces
+									est := '1';
+								Sino Si tramo = '2' Entonces
+									est := '3';
+								Sino Si tramo = '6' Entonces
+									Salir Repetir;
+								FinSi
+						Fin Segun
+						Sino Si tramo = '3' Entonces
+							est := '4';
+						Sino Si tramo = '4' Entonces
+							est := '5';
+						Sino Si tramo = '6' Entonces
+							Salir Repetir;
+						FinSi
+				Fin Segun
+
+				Segun est Hacer
+					'3':
+						Repetir
+							Escribir "Estacion actual: La aguada";
+							Escribir "Ingrese el tramo que desee recorrer:";
+							Escribir "2. La aguada - La montaña";
+							Escribir "3. La aguada - Loma redonda";
+							Escribir "6. Salir del teleferico";
+							Leer tramo;
+							validar_n:= Falso;
+							n_llegada:= 'La Aguada';
+
+							Para i <- 1 Hasta Longitud(tramo) Con Paso 1 Hacer
+								Si No EstaEntre(tramo[i], '0', '9') Entonces
+									validar_n := Verdadero;
+									Salir Para;
+								FinSi
+							Fin Para
+
+							Si validar_n Entonces
+								Escribir "El tramo no es un número válido. Por favor ingrese un numero valido."
+						Hasta No validar_n
+
+						Si (tramo <> '2') y (tramo <> '3') y (tramo <> '6') Entonces
+							Escribir "Opcion no valida. Elige una opcion disponible.";
+						Sino Si tramo = '2' Entonces	
+							est := '2';
+						Sino Si tramo = '3' Entonces	
+							est := '4';
+						Sino Si tramo = '6' Entonces
+							Salir Repetir;
+						FinSi
+
+					'4':
+						Repetir
+							Escribir "Estacion actual: Loma redonda";
+							Escribir "Ingrese el tramo que desee recorrer:";
+							Escribir "3. Loma redonda - La aguada";
+							Escribir "4. Loma redonda - Pico espejo";
+							Escribir "6. Salir del teleferico";
+							Leer tramo;
+							validar_n:= Falso;
+							n_llegada:= 'Loma redonda';
+
+							Para i <- 1 Hasta Longitud(tramo) Con Paso 1 Hacer
+								Si No EstaEntre(tramo[i], '0', '9') Entonces
+									validar_n := Verdadero;
+									Salir Para;
+								FinSi
+							Fin Para
+
+							Si validar_n Entonces
+								Escribir "El tramo no es un número válido. Por favor ingrese un numero valido."
+						Hasta No validar_n
+
+						Si (tramo <> '3') y (tramo <> '4') y (tramo <> '6') Entonces
+							Escribir "Opcion no valida. Elige una opcion disponible.";
+						Sino Si tramo = '3' Entonces	
+							est := '3';
+						Sino Si tramo = '4' Entonces	
+							est := '5';
+						Sino Si tramo = '6' Entonces
+							Salir Repetir;
+						FinSi
+
+					'5':
+						Repetir
+							Escribir "Estacion actual: Pico espejo";
+							Escribir "Ingrese el tramo que desee recorrer:";
+							Escribir "4. Pico espejo - Loma redonda";
+							Escribir "5. Pico espejo - Salir del teleferico";
+							Leer tramo;
+							validar_n:= Falso;
+							n_llegada:= 'Pico espejo';
+
+						Si (opc_t <> '1') y (opc_t <> '2') Entonces
+							Escribir "La opcion ingresada es invalida. Por favor ingrese una opcion valida.";
+						Hasta (opc_t = '2')
+
+						Repetir
+							Escribir "En este momento poseemos ", b_disp, " boletos disponibles";
+							Escribir "Estas son nuestras tarifas de precio";
+							Escribir "Boleto general: $.", b_general;
+							Escribir "Boleto especial (personas tercera edad y niños entre 3 y 12 años): $.", b_especial;
+							Escribir "Niños menores a 3 años exonerados";
+							Escribir "Por favor, ingrese la cantidad de boletas que desea comprar";
+							Leer val_str;
+							n_val := Verdadero;
+
+							Val(val_str, nboleto, val_int);
+
+							Si val_int <> 0 Entonces
+								Escribir "La entrada no es un número entero. Por favor, intenta de nuevo.";
+								n_val := Falso;
+							FinSi
+						Hasta n_val
+
+						Si (nboleto < 1) o (nboleto > b_disp) Entonces
+							Escribir "La cantidad de boletos es invalida para nuestras condiciones, por favor, ingrese una cantidad dentro del limite";
+						Hasta (nboleto >= 1) y (nboleto <= b_disp)
+
+						Repetir
+							Escribir "¿Deseas continuar entre tramos?";
+							Escribir "1. Si";
+							Escribir "2. No";
+							Leer opc_t;
+
+							Si (opc_t <> '1') y (opc_t <> '2') Entonces
+								Escribir "La opcion ingresada es invalida. Por favor ingrese una opcion valida.";
+						Hasta (opc_t = '2')
+
+						Repetir
+							Escribir "¿Estan incluidos niños?";
+							Escribir "1.Si";
+							Escribir "2.No";
+							Leer opc_n;
+
+							Si (opc_n <> '1') y (opc_n <> '2') Entonces
+								Escribir "La opcion seleccionada es inválida, seleccione una opcion válida";
+						Hasta (opc_n = '1') o (opc_n = '2')
+
+						Si (opc_n = '1') Entonces
+							Repetir
+								Escribir "Cuantos niños estan incluidos";
+								Leer cn_str;
+								n_val := Verdadero;
+								Val(cn_str, c_ninos, val_int);
+						Si (opc_t <> '1') y (opc_t <> '2') Entonces
+							Escribir "La opcion ingresada es invalida. Por favor ingrese una opcion valida.";
+						Hasta (opc_t = '2')
+
+						Repetir
+							Escribir "¿Estan incluidos niños?";
+							Escribir "1.Si";
+							Escribir "2.No";
+							Leer opc_n;
+
+							Si (opc_n <> '1') y (opc_n <> '2') Entonces
+								Escribir "La opcion seleccionada es inválida, seleccione una opcion válida";
+						Hasta (opc_n = '1') o (opc_n = '2')
+
+						Si (opc_n = '1') Entonces
+							Repetir
+								Escribir "Cuantos niños estan incluidos";
+								Leer cn_str;
+								n_val := Verdadero;
+								Val(cn_str, c_ninos, val_int);
+
+								Si val_int <> 0 Entonces
+									Escribir "La entrada no es un número entero. Por favor, intenta de nuevo.";
+									n_val := Falso;
+								FinSi
+							Hasta n_val
+
+							Si (c_ninos > nboleto) Entonces
+								Escribir "La cantidad ingresada excede el numero de boletos disponibles, por favor ingrese una cantidad valida";
+							Hasta (c_ninos <= nboleto)
+
+							i := 0;
+							n_especial := 0;
+							c_ex := 0;
+
+							Repetir
+								Escribir "Ingrese la edad del niño ", i+1;
+								Leer edad_str;
+								n_val := Verdadero;
+								Val(edad_str, e_ninos, val_int);
+
+								Si val_int <> 0 Entonces
+									Escribir "La entrada no es un número entero. Por favor, intenta de nuevo.";
+									n_val := Falso;
+								FinSi
+
+								Si (e_ninos <= 12) y (e_ninos >= 3) Entonces
+									n_especial := n_especial + 1;
+								Sino Si (e_ninos < 3) y (e_ninos >= 0) Entonces
+									c_ex := c_ex + 1;
+								FinSi
+
+								i := i + 1;
+							Hasta c_ninos = i
+
+							n_normales:= c_ninos - (c_ex + n_especial);
+						FinSi
+
+						Si (c_ninos < nboleto) Entonces
+							Repetir
+								Escribir "¿Estan incluidas personas de tercera edad?";
+								Escribir "1.Si";
+								Escribir "2.No";
+								Leer opc_v;
+
+						Si (opc_t <> '1') y (opc_t <> '2') Entonces
+							Escribir "La opcion ingresada es invalida. Por favor ingrese una opcion valida.";
+						Hasta (opc_t = '2')
+
+						c_especial := n_especial + c_viejos;
+						boleto_g := nboleto - c_especial - c_ex;
+
+						p_general:= boleto_g * b_general;
+						p_especial:= c_especial * b_especial;
+						p_total:= p_especial + p_general;
+
+						Escribir "----- Factura Teleférico -----";
+						Escribir "Nombre: ", nombre;
+						Escribir "Cedula: ", cedula;
+						Escribir "------------------";
+						Escribir "Estacion de salida: ", n_inicio;
+						Escribir "Estacion de llegada: ", n_llegada;
+						Escribir "------------------";
+						Escribir "Cantidad de niños: ", c_ninos;
+						Escribir "Ninos exonerados: ", c_ex;
+						Escribir "Niños con descuento: ",n_especial;
+						Escribir "Niños sin descuento: ", n_normales;
+						Escribir "Tercera edad: ", c_viejos;
+						Escribir "------------------";
+						Escribir "Boletos totales: ", nboleto;
+						Escribir "Boletos generales: ", boleto_g, "- Monto: $.", p_general:0:2;
+						Escribir "Boletos especiales: ", c_especial, "- Monto: $.", p_especial:0:2;
+						Escribir "Boletos exonerados: ", c_ex, "- Monto: $.0";
+						Escribir "------------------";
+						Escribir "Total a pagar: ", "- Monto: $.", p_total:0:2;
+						Escribir "------------------";
+
+						b_disp:= b_disp - nboleto;
+						total_v:= total_v + p_total;
+						total_e:= total_e + p_especial;
+						total_g:= total_g + p_general;
+
+					Sino
+							Escribir "Los asientos estan agotados. Vuelva mas tarde.";
+					FinSi
+					ventas:= ventas + 1;
+
+				'2':
+					Escribir "";
+					Escribir "-----Reporte del dia-----";
+					Escribir "Ventas realizadas: ",ventas;
+					Escribir "Asientos disponibles para el proximo viaje: ",b_disp;
+					Escribir "------------------";
+					Escribir "Boletos generales vendidos: ", b_gvendidos;
+					Escribir "Boletos especiales vendidos: ", b_evendidos;
+					Escribir "Boletos exonerados: ", b_exvendidos;
+					Escribir "Boletos vendidos: ", b_vendidos; 
+					Escribir "Todos los boletos han sido cancelados";
+					Escribir "------------------";
+					Escribir "Monto total de las ventas de boletos generales. ", b_gvendidos , " Boletos(20$): $.", total_g:0:2);
+					Escribir "Monto total de las ventas de boletos especiales. ", b_evendidos," Boletos(12$): $.", total_e:0:2);
+					Escribir "Monto total de las ventas: $.", total_v:0:2);
+					Escribir "------------------";
+
+				'3':
+					ClrScr;
+					writeln('Gracias por usar el programa del teleferico. Vuelva pronto.');
+			Fin Segun
+
+			b_vendidos:= b_vendidos + nboleto;
+			nboleto:= 0;
+			b_gvendidos:= b_gvendidos + boleto_g;
+			boleto_g:= 0;
+			b_evendidos:= b_evendidos + c_especial;//se van sumando las variables mostradas en sistema
+			c_especial:= 0;
+			b_exvendidos:= b_exvendidos + c_ex;
+			c_ex:= 0;
+			c_viejos:= 0;
+			c_ninos:=0;					
+			n_especial:= 0;
+			n_normales:= 0;
+
+	Hasta (opc = '3')
+FinAlgoritmo
