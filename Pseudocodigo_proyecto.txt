@@ -1,0 +1,647 @@
+﻿
+Pseudocodigo del programa 
+
+Programa Teleferico
+Variables 
+  b_exvendidos, ventas, b_gvendidos, b_evendidos, b_vendidos, i, nboleto, c_ninos, c_viejos, e_ninos, n_especial, c_especial, c_ex, boleto_g, n_normales,val_int, b_disp son enteros
+  nombre, cedula, est, tramo, opc_t, opc, n_inicio, n_llegada, opc_n, opc_v, val_str, cn_str, edad_str,vie_str son cadenas
+  validar_n, validar_l, n_val son booleanos
+  p_total, p_general, p_especial,total_v, total_g, total_e son reales
+Constantes
+b_general= 20
+b_especial= 12
+
+//Realizado por:
+//Rolando Rivas
+//Jesus Rivas
+
+Inicio //Inicio principal
+total_v:= 0
+total_e:= 0 //iniciando monos de ventas totales en 0 
+total_g:= 0
+b_disp:= 60 //boletos disponibles
+b_vendidos:= 0 //iniciando boletos en 0
+b_gvendidos:= 0
+b_exvendidos:= 0
+b_evendidos:= 0
+ventas:= 0
+
+Repetir //Para repetir todo el proceso de compras
+Repetir //Para validar la opcion
+Repetir //para validar que opc sea numero
+	Escribir('Bienvenido al teleferico de Merida...')
+	Escribir(' |------------------------------|')
+	Escribir(' |----------Teleferico----------|')
+	Escribir(' |1. Comprar boleto             |')
+	Escribir(' |2. Ver sistema del teleferico |')
+	Escribir(' |3. Salir                      |')
+	Escribir(' |------------------------------|')
+	Leer(opc)
+	validar_n:= falso
+	
+        Para i desde 1 hasta longitud(opc) hacer
+        Inicio //for para verificar que la opcion ingresada al inicio sea un numero
+            Si no (opc[i] en ['0'..'9']) entonces
+            
+                validar_n := verdadero
+                romper
+            
+        Fin //fin del for para verificar que la opcion ingresada al inicio sea un numero
+Si validar_n entonces
+    Inicio
+        Limpiar pantalla
+        Escribir('La opcion ingresada no es un numero valido. Por favor ingrese una opcion valida.')
+    Fin
+            
+Hasta que no validar_n //fin del repetir que valida que sea un numero
+	
+		Si (opc < '1') o (opc > '3') entonces
+		Inicio //Inicio del si para validar opcion
+			Limpiar pantalla
+			Escribir('Opcion invalida. Por favor ingrese una opcion valida.')
+		Fin //Fin del si para validar la opcion
+		
+Hasta (opc >= '1') y (opc <= '3') //Fin del repetir para validar opcion
+
+	Caso opc de //caso de opcion que quiera seleccionar
+		
+		'1': 
+		Inicio //inicio principal caso opcion 1
+		Limpiar pantalla
+		Si (b_disp > 0) entonces
+		Inicio
+			Escribir('Usted ha ingresado a la compra de boletos, a continuacion ingrese los datos solicitados.')
+			Repetir //repetir para validar el nombre
+			Escribir('Ingrese su nombre y apellido:')
+			Leer(nombre)
+			validar_l:= falso
+			
+				Para i desde 1 hasta longitud(nombre) hacer  // Para para verificar si el nombre es valido (que no contenga numeros).
+				Inicio //inicio del para
+					Si no (nombre[i] en ['A'..'Z', 'a'..'z', ' ']) entonces
+					Inicio //inicio del si para validar nombre
+						validar_l := verdadero
+						Romper
+					Fin //fin del si para validar nombre
+				Fin //fin del para para validar nombre
+
+				Si  validar_l entonces// si en caso de que el nombre sea invalido
+				Inicio //inicio del si en caso de que el nombre no sea valido
+					Limpiar pantalla
+					Escribir('El nombre y apellido no pueden contener numeros, ingrese un nombre valido.')
+				 Fin //fin del si en caso de que el nombre no sea valido
+			Hasta que no validar_l //fin del repetir para validar nombre
+
+			Mientras validar_n sea falso
+    Imprimir "Ingrese su número de cédula: "
+    Leer cedula
+
+    Para i desde 1 hasta la longitud de cedula
+        Si cedula[i] no está en el rango '0' a '9'
+            Asignar verdadero a validar_n
+            Salir del bucle
+        Fin Si
+    Fin Para
+
+    Si validar_n es verdadero
+        Limpiar pantalla
+        Imprimir "La cédula ingresada solo debe contener números. Por favor ingrese un número de cédula válido."
+    Fin Si
+Fin Mientras
+
+Limpiar pantalla
+
+Mientras validar_n sea falso
+    Mientras est no esté en el rango '1' a '5'
+        Imprimir "Ingrese el número de la estación donde se encuentra:"
+        Leer est
+
+        Si est es menor que '1' o mayor que '5'
+            Limpiar pantalla
+            Imprimir "La estación ingresada no es válida. Por favor ingrese una estación válida"
+        Fin Si
+    Fin Mientras
+
+    Según est
+        Caso '1':
+            Asignar 'Barinitas' a n_inicio
+        Caso '2':
+            Asignar 'La montaña' a n_inicio
+        Caso '3':
+            Asignar 'La aguada' a n_inicio
+        Caso '4':
+            Asignar 'Loma redonda' a n_inicio
+        Caso '5':
+            Asignar 'Pico espejo' a n_inicio
+    Fin Según
+
+    Para i desde 1 hasta la longitud de est
+        Si est[i] no está en el rango '0' a '9'
+            Asignar verdadero a validar_n
+            Salir del bucle
+        Fin Si
+    Fin Para
+
+    Si validar_n es verdadero
+        Imprimir "La estación no es un número válido. Por favor ingrese un número válido ."
+    Fin Si
+Fin Mientras
+
+Mientras validar_n sea falso
+    Limpiar pantalla
+
+    Según est
+        Caso '1':
+            Mientras tramo no sea igual a '1' o tramo no sea igual a '6'
+                Imprimir "Estación actual: Barinitas"
+                Imprimir "Ingrese el tramo que desee recorrer:"
+                Leer tramo
+
+                Si tramo es menor que '1' o mayor que '6'
+                    Limpiar pantalla
+                    Imprimir "El tramo ingresado no es válido. Por favor ingrese un tramo válido"
+                Fin Si
+            Fin Mientras
+
+            Asignar 'Barinitas' a n_llegada
+
+			Para i desde 1 hasta la longitud de tramo
+    Si tramo[i] no está en el rango '0' a '9'
+        Asignar verdadero a validar_n
+        Salir del bucle
+    Fin Si
+Fin Para
+
+Si validar_n es verdadero
+    Imprimir "El tramo no es un número válido. Por favor ingrese un número válido."
+
+Mientras validar_n sea falso
+    Si tramo no es igual a '1' y tramo no es igual a '6'
+        Imprimir "Opción no válida. Elige una opción disponible."
+    Fin Si
+
+    Si tramo es igual a '1'
+        Asignar '2' a est
+    Fin Si
+
+    Si tramo es igual a '6'
+        Salir del bucle
+    Fin Si
+Fin Mientras
+
+Según est
+    Caso '2':
+        Mientras validar_n sea falso
+            Imprimir "Estación actual: La montaña"
+            Imprimir "Ingrese el tramo que desee recorrer:"
+            Leer tramo
+
+            Asignar 'La montaña' a n_llegada
+
+            Para i desde 1 hasta la longitud de tramo
+                Si tramo[i] no está en el rango '0' a '9'
+                    Asignar verdadero a validar_n
+                    Salir del bucle
+                Fin Si
+            Fin Para
+        Fin Mientras
+Fin Según
+
+Si validar_n es verdadero
+    Imprimir "El tramo no es un número válido. Por favor ingrese un número válido."
+
+Mientras validar_n sea falso
+    Si tramo no es igual a '1', tramo no es igual a '2' y tramo no es igual a '6'
+        Imprimir "Opción no válida. Elige una opción disponible."
+    Fin Si
+
+    Si tramo es igual a '1'
+        Asignar '1' a est
+    Fin Si
+
+    Si tramo es igual a '2'
+        Asignar '3' a est
+    Fin Si
+
+    Si tramo es igual a '6'
+        Salir del bucle
+    Fin Si
+Fin Mientras
+
+Según est
+    Caso '3':
+        Mientras validar_n sea falso
+            Imprimir "Estación actual: La aguada"
+            Imprimir "Ingrese el tramo que desee recorrer:"
+            Leer tramo
+
+            Asignar 'La Aguada' a n_llegada
+
+            Para i desde 1 hasta la longitud de tramo
+                Si tramo[i] no está en el rango '0' a '9'
+                    Asignar verdadero a validar_n
+                    Salir del bucle
+                Fin Si
+            Fin Para
+
+            Si validar_n es verdadero
+                Imprimir "El tramo no es un número válido. Por favor ingrese un número válido."
+        Fin Mientras
+Fin Según
+
+Si (tramo ≠ '2') Y (tramo ≠ '3') Y (tramo ≠ '6') Entonces
+    Escribir('Opción no válida. Elige una opción disponible.')
+Sino Si tramo = '2' Entonces
+    est := '2'
+Sino Si tramo = '3' Entonces
+    est := '4'
+Sino Si tramo = '6' Entonces
+    Salir del bucle
+Fin Si
+
+Para la opción '4':
+Repetir
+    Escribir('Estación actual: Loma redonda')
+    Escribir('Ingrese el tramo que desee recorrer:')
+    Escribir('3. Loma redonda - La aguada')
+    Escribir('4. Loma redonda - Pico espejo')
+    Escribir('6. Salir del teleférico')
+    Leer(tramo)
+    validar_n := falso
+    n_llegada := 'Loma redonda'
+
+    Para i desde 1 hasta Longitud(tramo) Hacer
+        Si tramo[i] no está en ['0'..'9'] Entonces
+            validar_n := verdadero
+            Salir del bucle
+        Fin Si
+    Fin Para
+
+    Si validar_n Entonces
+        Escribir('El tramo no es un número válido. Por favor ingrese un número válido.')
+Hasta no validar_n
+
+Si (tramo ≠ '3') Y (tramo ≠ '4') Y (tramo ≠ '6') Entonces
+    Escribir('Opción no válida. Elige una opción disponible.')
+Sino Si tramo = '3' Entonces
+    est := '3'
+Sino Si tramo = '4' Entonces
+    est := '5'
+Sino Si tramo = '6' Entonces
+    Salir del bucle
+Fin Si
+
+   Para i desde 1 hasta Longitud(tramo) Hacer
+        Si tramo[i] no está en ['0'..'9'] Entonces
+            validar_n := verdadero
+            Salir del bucle
+        Fin Si
+    Fin Para
+
+    Si validar_n Entonces
+        Escribir('El tramo no es un número válido. Por favor ingrese un número válido.')
+Hasta no validar_n
+
+Si (tramo ≠ '3') Y (tramo ≠ '4') Y (tramo ≠ '6') Entonces
+    Escribir('Opción no válida. Elige una opción disponible.')
+Sino Si tramo = '3' Entonces
+    est := '3'
+Sino Si tramo = '4' Entonces
+    est := '5'
+Sino Si tramo = '6' Entonces
+    Salir del bucle
+Fin Si
+
+Para la opción '5':
+Repetir
+    Escribir('Estación actual: Pico espejo')
+    Escribir('Ingrese el tramo que desee recorrer:')
+    Escribir('4. Pico espejo - Loma redonda')
+    Escribir('5. Pico espejo - Salir del teleférico')
+    Leer(tramo)
+    validar_n := falso
+    n_llegada := 'Pico espejo'
+
+    Para i desde 1 hasta Longitud(tramo) Hacer
+        Si tramo[i] no está en ['0'..'9'] Entonces
+            validar_n := verdadero
+            Salir del bucle
+        Fin Si
+    Fin Para
+
+Si validar_n Entonces
+    Escribir('El tramo no es un número válido. Por favor ingrese un número válido.')
+Hasta no validar_n
+
+Si (tramo ≠ '4') Y (tramo ≠ '5') Entonces
+    Escribir('Opción no válida. Elige una opción disponible.')
+Sino Si tramo = '4' Entonces
+    est := '4'
+Sino Si (tramo = '5') o (tramo = '6') Entonces
+    Escribir('Ya se recorrieron todos los tramos.')
+    Salir del bucle
+Fin Si
+
+Repetir
+    Escribir('¿Deseas continuar entre tramos?')
+    Escribir('1. Sí')
+    Escribir('2. No')
+    Leer(opc_t)
+    validar_n := falso
+
+    Para i desde 1 hasta Longitud(opc_t) Hacer
+        Si opc_t[i] no está en ['0'..'9'] Entonces
+            validar_n := verdadero
+            Salir del bucle
+        Fin Si
+    Fin Para
+
+    Si validar_n Entonces
+        Escribir('La opción no es un número válido. Por favor ingrese un número válido.')
+Hasta no validar_n
+
+Si (opc_t ≠ '1') Y (opc_t ≠ '2') Entonces
+    Escribir('La opción ingresada es inválida. Por favor ingrese una opción válida.')
+Hasta opc_t = '2'
+
+LIMPIAR PANTALLA
+REPETIR
+    REPETIR
+        ESCRIBIR ''
+        ESCRIBIR 'En este momento poseemos ', b_disp, ' boletos disponibles'
+        ESCRIBIR ''
+        ESCRIBIR 'Estas son nuestras tarifas de precio'
+        ESCRIBIR ''
+        ESCRIBIR 'Boleto general: $.', b_general
+        ESCRIBIR 'Boleto especial (personas tercera edad y niños entre 3 y 12 años): $.', b_especial
+        ESCRIBIR 'Niños menores a 3 años exonerados'
+        ESCRIBIR ''
+        ESCRIBIR 'Por favor, ingrese la cantidad de boletas que desea comprar'
+        LEER val_str
+        n_val := VERDADERO
+
+        CONVERTIR val_str A nboleto
+
+        SI val_int <> 0 ENTONCES
+            LIMPIAR PANTALLA
+            ESCRIBIR ''
+            ESCRIBIR 'La entrada no es un número entero. Por favor, intenta de nuevo.'
+            n_val := FALSO
+        FIN SI
+    HASTA n_val
+
+    SI (nboleto < 1) O (nboleto > b_disp) ENTONCES
+        LIMPIAR PANTALLA
+        ESCRIBIR ''
+        ESCRIBIR 'La cantidad de boletos es inválida para nuestras condiciones, por favor, ingrese una cantidad dentro del límite'
+    FIN SI
+
+HASTA (nboleto >= 1) Y (nboleto <= b_disp)
+
+LIMPIAR PANTALLA
+
+REPETIR
+    ESCRIBIR ''
+    ESCRIBIR '¿Están incluidos niños?'
+    ESCRIBIR ''
+    ESCRIBIR '1.Si'
+    ESCRIBIR '2.No'
+    LEER opc_n
+
+    SI (opc_n <> '1') Y (opc_n <> '2') ENTONCES
+        LIMPIAR PANTALLA
+        ESCRIBIR 'La opción seleccionada es inválida, seleccione una opción válida'
+    FIN SI
+
+	HASTA (opc_n = '1') O (opc_n = '2')
+
+SI (opc_n = '1') ENTONCES
+    LIMPIAR PANTALLA
+    REPETIR
+        REPETIR
+            ESCRIBIR ''
+            ESCRIBIR '¿Cuántos niños están incluidos?'
+            LEER cn_str
+            n_val := VERDADERO
+            CONVERTIR cn_str A c_ninos
+
+            SI val_int <> 0 ENTONCES
+                LIMPIAR PANTALLA
+                ESCRIBIR ''
+                ESCRIBIR 'El número que ingresó no es válido. Por favor ingrese un número entero válido.'
+                n_val := FALSO
+            FIN SI
+        HASTA n_val
+
+        SI (c_ninos > nboleto) ENTONCES
+            LIMPIAR PANTALLA
+            ESCRIBIR ''
+            ESCRIBIR 'La cantidad ingresada excede el número de boletos disponibles, por favor ingrese una cantidad válida'
+        FIN SI
+
+    HASTA (c_ninos <= nboleto)
+
+    i := 0
+    n_especial := 0
+    c_ex := 0
+
+    LIMPIAR PANTALLA
+    REPETIR
+        REPETIR
+            ESCRIBIR ''
+            ESCRIBIR 'Ingrese la edad del niño ', i+1
+            LEER edad_str
+            n_val := VERDADERO
+            CONVERTIR edad_str A e_ninos
+
+            SI val_int <> 0 ENTONCES
+                LIMPIAR PANTALLA
+                ESCRIBIR ''
+                ESCRIBIR 'La entrada no es un número entero. Por favor, intenta de nuevo.'
+                n_val := FALSO
+            FIN SI
+
+        HASTA n_val
+
+		SI (e_ninos <= 12) Y (e_ninos >= 3) ENTONCES
+    n_especial := n_especial + 1
+FIN SI
+
+SI (e_ninos < 3) Y (e_ninos >= 0) ENTONCES
+    c_ex := c_ex + 1
+FIN SI
+
+i := i + 1
+
+HASTA c_ninos = i
+
+n_normales:= c_ninos - (c_ex + n_especial)
+
+SI (c_ninos < nboleto) ENTONCES
+    LIMPIAR PANTALLA
+    REPETIR
+        REPETIR
+            ESCRIBIR ''
+            ESCRIBIR '¿Están incluidas personas de tercera edad?'
+            ESCRIBIR ''
+            ESCRIBIR '1.Si'
+            ESCRIBIR '2.No'
+            LEER opc_v
+            validar_n := FALSO
+
+            PARA i := 1 HASTA Longitud(opc_v) HACER
+                SI NO (opc_v[i] EN ['0'..'9']) ENTONCES
+                    validar_n := VERDADERO
+                    ROMPER
+                FIN SI
+
+            SI validar_n ENTONCES
+                LIMPIAR PANTALLA
+                ESCRIBIR ''
+                ESCRIBIR 'La opción ingresada no es un número válido. Ingrese una opción válida.'
+            FIN SI
+
+        HASTA NO validar_n
+
+		SI (opc_v <> '1') Y (opc_v <> '2') ENTONCES
+    LIMPIAR PANTALLA
+    ESCRIBIR ''
+    ESCRIBIR 'La opción seleccionada es inválida, seleccione una opción válida'
+FIN SI
+
+HASTA (opc_v = '1') O (opc_v = '2')
+
+SI (opc_v = '1') ENTONCES
+    LIMPIAR PANTALLA
+    REPETIR
+        REPETIR
+            ESCRIBIR ''
+            ESCRIBIR '¿Cuántas personas de tercera edad están incluidas?'
+            LEER vie_str
+            n_val := VERDADERO
+            CONVERTIR vie_str A c_viejos
+
+            SI val_int <> 0 ENTONCES
+                LIMPIAR PANTALLA
+                ESCRIBIR ''
+                ESCRIBIR 'La entrada no es un número entero. Por favor, intenta de nuevo.'
+                n_val := FALSO
+            FIN SI
+
+        HASTA n_val
+
+        SI (c_viejos > (nboleto - c_ninos)) ENTONCES
+            LIMPIAR PANTALLA
+            ESCRIBIR ''
+            ESCRIBIR 'La cantidad ingresada excede el número de boletos disponibles, por favor ingrese una cantidad válida'
+        FIN SI
+
+    HASTA (c_viejos <= (nboleto - c_ninos))
+
+FIN SI
+
+c_especial := n_especial + c_viejos
+boleto_g := nboleto - c_especial - c_ex 
+
+p_general:= boleto_g * b_general
+p_especial:= c_especial * b_especial
+p_total:= p_especial + p_general
+
+LIMPIAR PANTALLA
+ESCRIBIR ''
+ESCRIBIR ' |----- Factura Teleférico -----|'
+ESCRIBIR ' |'
+ESCRIBIR ' | Nombre: ', nombre
+ESCRIBIR ' | Cedula: ', cedula
+ESCRIBIR ' | ------------------------------|'
+ESCRIBIR ' | Estacion de salida: ', n_inicio
+ESCRIBIR ' | Estacion de llegada: ', n_llegada
+ESCRIBIR ' | ------------------------------|'
+ESCRIBIR ' | Cantidad de niños: ', c_ninos
+ESCRIBIR ' | Niños exonerados: ', c_ex
+ESCRIBIR ' | Niños con descuento: ',n_especial
+ESCRIBIR ' | Niños sin descuento: ', n_normales
+ESCRIBIR ' | Tercera edad: ', c_viejos
+ESCRIBIR ' | ------------------------------|'
+ESCRIBIR ' | Boletos totales: ', nboleto
+ESCRIBIR ' | Boletos generales: ', boleto_g, '- Monto: $.', p_general:0:2
+ESCRIBIR ' | Boletos especiales: ', c_especial, '- Monto: $.', p_especial:0:2
+ESCRIBIR ' | Boletos exonerados: ', c_ex, '- Monto: $.0'
+ESCRIBIR ' | -----------------------------'
+ESCRIBIR ' | Total a pagar: ', '- Monto: $.', p_total:0:2
+ESCRIBIR ' | -----------------------------'
+ESCRIBIR ''
+ESCRIBIR 'Presione la tecla (enter) para continuar...'
+LEER entrada_usuario	
+LIMPIAR PANTALLA	
+b_disp := b_disp - nboleto //Restando los boletos comprados a los disponibles en cada viaje
+total_v := total_v + p_total //sumando el total de ventas
+total_e := total_e + p_especial
+total_g := total_g + p_general
+
+SI (b_disp < 0) ENTONCES //si los asientos se acaban
+    LIMPIAR PANTALLA
+    ESCRIBIR ''
+    ESCRIBIR 'Los asientos estan agotados. Vuelva mas tarde.'
+ventas := ventas + 1 //end principal case opcion 1
+
+SI (opc = '2') ENTONCES
+    LIMPIAR PANTALLA
+    ESCRIBIR ''
+    ESCRIBIR '-----Reporte del dia-----'
+    ESCRIBIR 'Ventas realizadas: ', ventas
+    ESCRIBIR 'Asientos disponibles para el proximo viaje: ', b_disp
+    ESCRIBIR '------------------'
+    ESCRIBIR 'Boletos generales vendidos: ', b_gvendidos
+    ESCRIBIR 'Boletos especiales vendidos: ', b_evendidos
+    ESCRIBIR 'Boletos exonerados: ', b_exvendidos
+    ESCRIBIR 'Boletos vendidos: ', b_vendidos
+    ESCRIBIR 'Todos los boletos han sido cancelados'
+    ESCRIBIR '------------------'
+    ESCRIBIR 'Monto total de las ventas de boletos generales. ', b_gvendidos , ' Boletos(20$): $.', total_g:0:2
+    ESCRIBIR 'Monto total de las ventas de boletos especiales. ', b_evendidos,' Boletos(12$): $.', total_e:0:2
+    ESCRIBIR 'Monto total de las ventas: $.', total_v:0:2
+    ESCRIBIR '------------------'
+    ESCRIBIR ''
+    ESCRIBIR 'Presione la tecla (enter) para continuar...'
+    LEER entrada_usuario	
+    LIMPIAR PANTALLA
+
+SI (opc = '3') ENTONCES
+    LIMPIAR PANTALLA
+    ESCRIBIR 'Gracias por usar el programa del teleferico. Vuelva pronto.'
+    ESCRIBIR ''
+    ESCRIBIR 'Presione la tecla (enter) para continuar...'
+    LEER entrada_usuario	
+    LIMPIAR PANTALLA
+
+b_vendidos := b_vendidos + nboleto
+nboleto := 0
+b_gvendidos := b_gvendidos + boleto_g
+boleto_g := 0
+b_evendidos := b_evendidos + c_especial //se van sumando las variables mostradas en sistema
+c_especial := 0
+b_exvendidos := b_exvendidos + c_ex
+c_ex := 0
+c_viejos := 0
+c_ninos := 0 //se hacen 0 las variables para evitar errores al repetir bucle
+n_especial := 0
+n_normales := 0
+
+REPETIR HASTA (opc = '3') //fin del bucle de ventas
+
+FIN //fin principal
+
+
+*Variaciones en la sintaxis del pseudocodigo debido a que nos dividimos las partes a transcribir XD*
+
+
+
+
+
+
+
+
+
+
+
