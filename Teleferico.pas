@@ -8,6 +8,10 @@ Var
 const
 b_general= 20;
 b_especial= 12;
+
+//Realizado por:
+//Rolando Rivas
+//Jesus Rivas 
   
 Begin//Begin principal
 total_v:= 0;
